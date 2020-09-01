@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Simón B.P.</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="defeated">Buen intento</string>
+    <string name="victory">VICTORIA</string>
+    <string name="exit">Salir</string>
+    <string name="wannaExit">¿Deseas salir? Se perderá el progreso</string>
+    <string name="cancel">Cancelar</string>
+    <string name="easy">Fácil</string>
+    <string name="medium">Medio</string>
+    <string name="difficult">Difícil</string>
+</resources>
