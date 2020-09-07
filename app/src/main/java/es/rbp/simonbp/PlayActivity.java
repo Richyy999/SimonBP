@@ -46,7 +46,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Duración de la animación de crecer o encoger los botones pulsados
      */
-    private static final int DURATION_CRECER_ENCOGER_BOTONES = 200;
+    private static final int DURATION_CRECER_ENCOGER_BOTONES = 250;
 
     /**
      * Duración de la animación de crecer o encoger el Text View
@@ -59,6 +59,13 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
      * Mayor número que la cpu puede generar aleatoriamente para añadirlo a la serie
      */
     private static final int NUMERO_MAXIMO = 6;
+
+    /**
+     * Número de veces que se puede usar el truco en una partida.
+     *
+     * @see PlayActivity#truco()
+     */
+    private static int NUMERO_MAXIMO_TRUCO;
 
     /**
      * Rondas que dura la partida
@@ -112,9 +119,16 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
      */
     private int index;
     /**
-     * Ronda en la que se encuantra el jugador
+     * Ronda en la que se encuantra el jugador.
      */
     private int turnoActual;
+    /**
+     * Nùmero de veces que se ha usado el truco.
+     *
+     * @see PlayActivity#truco()
+     */
+    private int numTruco;
+
 
     /**
      * Pasos a seguir para realizar el truco
@@ -138,6 +152,18 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         TURNOS = getIntent().getIntExtra(DIFICULTAD_EXTRA, 6);
+
+        switch (TURNOS) {
+            case 6:
+                NUMERO_MAXIMO_TRUCO = 0;
+                break;
+            case 9:
+                NUMERO_MAXIMO_TRUCO = 6;
+                break;
+            case 12:
+                NUMERO_MAXIMO_TRUCO = 1;
+                break;
+        }
 
         cpu = new ArrayList<>();
 
@@ -607,14 +633,15 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
      * Si la dificultad es "Dificil" sólo se puede usar una vez.
      */
     private void truco() {
-        StringBuilder numeros = new StringBuilder();
-        for (int i = index - 1; i < cpu.size(); i++) {
-            numeros.append(cpu.get(i)).append(" ");
-        }
-        Toast.makeText(this, numeros.toString().trim(), Toast.LENGTH_LONG).show();
-        if (TURNOS < 12) {
+        if (numTruco < NUMERO_MAXIMO_TRUCO || NUMERO_MAXIMO_TRUCO == 0) {
+            StringBuilder numeros = new StringBuilder();
+            for (int i = index - 1; i < cpu.size(); i++) {
+                numeros.append(cpu.get(i)).append(" ");
+            }
+            Toast.makeText(this, numeros.toString().trim(), Toast.LENGTH_LONG).show();
             paso1 = false;
             paso2 = false;
+            numTruco++;
         }
     }
 }
